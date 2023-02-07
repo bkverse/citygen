@@ -160,20 +160,20 @@ public class CustomPiecesWizard : EditorWindow
         {
             GameObject bridge1 = bridge;
             bridge1.transform.eulerAngles = new Vector3(0, 90, 0);
-            AddRigidbodyAndMeshcollider(bridge1);
+            //AddRigidbodyAndMeshcollider(bridge1);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_bridge1.prefab", bridge1);
         }
         if (Resources.Load("4_bridge2") == null)
         {
             GameObject bridge2 = bridge;
             bridge2.transform.eulerAngles = new Vector3(0, 0, 0);
-            AddRigidbodyAndMeshcollider(bridge2);
+            //AddRigidbodyAndMeshcollider(bridge2);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_bridge2.prefab", bridge2);
         }
         if (Resources.Load("4_fourway") == null)
         {
             GameObject fourway1 = fourway;
-            AddRigidbodyAndMeshcollider(fourway1);
+            //AddRigidbodyAndMeshcollider(fourway1);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_fourway.prefab", fourway1);
         }
 
@@ -181,14 +181,14 @@ public class CustomPiecesWizard : EditorWindow
         {
             GameObject straight2 = straight;
             straight2.transform.eulerAngles = new Vector3(0, 90, 0);
-            AddRigidbodyAndMeshcollider(straight2);
+            //AddRigidbodyAndMeshcollider(straight2);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_straight2.prefab", straight2);
         }
         if (Resources.Load("4_straight1") == null)
         {
             GameObject straight1 = straight;
             straight1.transform.eulerAngles = new Vector3(0, 0, 0);
-            AddRigidbodyAndMeshcollider(straight1);
+            //AddRigidbodyAndMeshcollider(straight1);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_straight1.prefab", straight1);
         }
 
@@ -196,28 +196,28 @@ public class CustomPiecesWizard : EditorWindow
         {
             GameObject Threeway1 = threeway;
             Threeway1.transform.eulerAngles = new Vector3(0, 270, 0);
-            AddRigidbodyAndMeshcollider(Threeway1);
+            //AddRigidbodyAndMeshcollider(Threeway1);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_Threeway1.prefab", Threeway1);
         }
         if (Resources.Load("4_Threeway2") == null)
         {
             GameObject Threeway2 = threeway;
             Threeway2.transform.eulerAngles = new Vector3(0, 180, 0);
-            AddRigidbodyAndMeshcollider(Threeway2);
+            //AddRigidbodyAndMeshcollider(Threeway2);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_Threeway2.prefab", Threeway2);
         }
         if (Resources.Load("4_Threeway3") == null)
         {
             GameObject Threeway3 = threeway;
             Threeway3.transform.eulerAngles = new Vector3(0, 90, 0);
-            AddRigidbodyAndMeshcollider(Threeway3);
+            //AddRigidbodyAndMeshcollider(Threeway3);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_Threeway3.prefab", Threeway3);
         }
         if (Resources.Load("4_Threeway4") == null)
         {
             GameObject Threeway4 = threeway;
             Threeway4.transform.eulerAngles = new Vector3(0, 0, 0);
-            AddRigidbodyAndMeshcollider(Threeway4);
+            //AddRigidbodyAndMeshcollider(Threeway4);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_Threeway4.prefab", Threeway4);
         }
 
@@ -225,44 +225,44 @@ public class CustomPiecesWizard : EditorWindow
         {
             GameObject turn2 = turn;
             turn2.transform.eulerAngles = new Vector3(0, 90, 0);
-            AddRigidbodyAndMeshcollider(turn2);
+            //AddRigidbodyAndMeshcollider(turn2);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_turn2.prefab", turn2);
         }
         if (Resources.Load("4_turn3") == null)
         {
             GameObject turn3 = turn;
             turn3.transform.eulerAngles = new Vector3(0, 180, 0);
-            AddRigidbodyAndMeshcollider(turn3);
+            //AddRigidbodyAndMeshcollider(turn3);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_turn3.prefab", turn3);
         }
         if (Resources.Load("4_turn4") == null)
         {
             GameObject turn4 = turn;
             turn4.transform.eulerAngles = new Vector3(0, 270, 0);
-            AddRigidbodyAndMeshcollider(turn4);
+            //AddRigidbodyAndMeshcollider(turn4);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_turn4.prefab", turn4);
         }
         if (Resources.Load("4_turn1") == null)
         {
             GameObject turn1 = turn;
             turn1.transform.eulerAngles = new Vector3(0, 0, 0);
-            AddRigidbodyAndMeshcollider(turn1);
+            //AddRigidbodyAndMeshcollider(turn1);
             PrefabUtility.CreatePrefab("Assets/Auto-road Creator_V3/Resources/4_turn1.prefab", turn1);
         }
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
-    private void AddRigidbodyAndMeshcollider(GameObject G)
-    {
-        if (G.GetComponent<MeshCollider>() == null)
-        {
-            G.AddComponent<MeshCollider>();
-        }
-        if (G.GetComponent<Rigidbody>() == null)
-        {
-            Rigidbody r = G.AddComponent<Rigidbody>();
-            r.isKinematic = true;
-        }
-    }
+    //private void AddRigidbodyAndMeshcollider(GameObject G)
+    //{
+    //    if (G.GetComponent<MeshCollider>() == null)
+    //    {
+    //        G.AddComponent<MeshCollider>();
+    //    }
+    //    if (G.GetComponent<Rigidbody>() == null)
+    //    {
+    //        Rigidbody r = G.AddComponent<Rigidbody>();
+    //        r.isKinematic = true;
+    //    }
+    //}
 
 }

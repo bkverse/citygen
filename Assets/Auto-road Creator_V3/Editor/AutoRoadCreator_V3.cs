@@ -415,48 +415,57 @@ public class AutoRoadCreator_V3 : EditorWindow
                             }
                             GUI.changed = true;
                             int id = 0;
+                            bool isSpecialBuidling = false;
                             if (!specialCase)
                             {
+
                                 if (Lanes != 4)
                                 {
-                                    GridBoxes[C][R].IsOn = InitialDraggingBool;
-                                    id = GetID(C, R, true);
-                                    GridBoxes[C][R].UpdateTexture(TM.GetTextureByID(id), id);
-
-                                    try
-                                    {
-                                        id = GetID(C + 1, R, false);
-                                        GridBoxes[(C + 1)][R].UpdateTexture(TM.GetTextureByID(id), id);
-                                    }
-                                    catch (System.Exception exe) { };
-
-                                    try
-                                    {
-                                        id = GetID(C - 1, R, false);
-                                        GridBoxes[(C - 1)][R].UpdateTexture(TM.GetTextureByID(id), id);
-                                    }
-                                    catch (Exception exe) { };
-
-                                    try
-                                    {
-                                        id = GetID(C, R + 1, false);
-                                        GridBoxes[C][R + 1].UpdateTexture(TM.GetTextureByID(id), id);
-                                    }
-                                    catch (Exception exe) { };
-
-                                    try
-                                    {
-                                        id = GetID(C, R - 1, false);
-                                        GridBoxes[C][R - 1].UpdateTexture(TM.GetTextureByID(id), id);
-                                    }
-                                    catch (Exception exe) { };
+                                    isSpecialBuidling = false;
                                 }
                                 else
                                 {
-                                    GridBoxes[C][R].IsOn = InitialDraggingBool;
-                                    id = GetID(C, R, true);
-                                    GridBoxes[C][R].UpdateTexture(TM.GetTextureByID(id), id);
+                                    isSpecialBuidling = true;
                                 }
+                                GridBoxes[C][R].IsOn = InitialDraggingBool;
+                                id = GetID(C, R, true, false);
+                                GridBoxes[C][R].UpdateTexture(TM.GetTextureByID(id), id);
+                                try
+                                {
+                                    id = GetID(C + 1, R, false , isSpecialBuidling);
+                                    GridBoxes[(C + 1)][R].UpdateTexture(TM.GetTextureByID(id), id);
+                                }
+                                catch (System.Exception exe) { };
+
+                                try
+                                {
+                                    id = GetID(C - 1, R, false, isSpecialBuidling);
+                                    GridBoxes[(C - 1)][R].UpdateTexture(TM.GetTextureByID(id), id);
+                                }
+                                catch (Exception exe) { };
+
+                                try
+                                {
+                                    id = GetID(C, R + 1, false, isSpecialBuidling);
+                                    GridBoxes[C][R + 1].UpdateTexture(TM.GetTextureByID(id), id);
+
+                                }
+                                catch (Exception exe) { };
+
+                                try
+                                {
+                                    id = GetID(C, R - 1, false, isSpecialBuidling);
+                                    GridBoxes[C][R - 1].UpdateTexture(TM.GetTextureByID(id), id);
+
+                                }
+                                catch (Exception exe) { };
+                                //}
+                                //else
+                                //{
+                                //    GridBoxes[C][R].IsOn = InitialDraggingBool;
+                                //    id = GetID(C, R, true);
+                                //    GridBoxes[C][R].UpdateTexture(TM.GetTextureByID(id), id);
+                                //}
                             }
 
                             if (InitialDraggingBool)
@@ -812,10 +821,7 @@ public class AutoRoadCreator_V3 : EditorWindow
         }
         else
         {
-            if(Lanes != 4)
-            {
-                mapscript.createPart(i, J, null);
-            }
+            mapscript.createPart(i, J, null);
         }
         if (ter != null)
         {
@@ -834,48 +840,47 @@ public class AutoRoadCreator_V3 : EditorWindow
     }
     string ReturnPartName(int i, int j, bool primarypart)
     {
+        if (mapscript.Getpartexist(i, j))
+        {
+
+            try
+            {
+                if (mapscript.Getpartexist(i + 1, j))
+                {
+                    right = true;
+                }
+            }
+            catch (Exception e) { right = false; };
+
+            try
+            {
+                if (mapscript.Getpartexist(i - 1, j))
+                {
+                    left = true;
+                }
+            }
+            catch (Exception e) { left = false; };
+
+            try
+            {
+                if (mapscript.Getpartexist(i, j + 1))
+                {
+                    dowm = true;
+                }
+            }
+            catch (Exception e) { dowm = false; };
+
+            try
+            {
+                if (mapscript.Getpartexist(i, j - 1))
+                {
+                    up = true;
+                }
+            }
+            catch (Exception e) { up = false; };
+        }
         if (Lanes != 4)
         {
-            if (mapscript.Getpartexist(i, j))
-            {
-
-                try
-                {
-                    if (mapscript.Getpartexist(i + 1, j))
-                    {
-                        right = true;
-                    }
-                }
-                catch (Exception e) { right = false; };
-
-                try
-                {
-                    if (mapscript.Getpartexist(i - 1, j))
-                    {
-                        left = true;
-                    }
-                }
-                catch (Exception e) { left = false; };
-
-                try
-                {
-                    if (mapscript.Getpartexist(i, j + 1))
-                    {
-                        dowm = true;
-                    }
-                }
-                catch (Exception e) { dowm = false; };
-
-                try
-                {
-                    if (mapscript.Getpartexist(i, j - 1))
-                    {
-                        up = true;
-                    }
-                }
-                catch (Exception e) { up = false; };
-            }
-
             if (!up && !dowm && !left && !right)
             {
                 up = false;
@@ -1160,12 +1165,14 @@ public class AutoRoadCreator_V3 : EditorWindow
         }
         else
         {
-            if(mapscript.Getpartexist(i, j))
-            {
-                return "" + (Lanes + 1) + "_SpecialBuildingPlace";
-            }
+            up = false;
+            right = false;
+            dowm = false;
+            left = false;
+
+            return "SpecialBuildingPlace";
         }
-        return "Dir errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+        return "Dir error";
     }
 
     void UpdateAllPartsToTerrain()
@@ -1248,7 +1255,7 @@ public class AutoRoadCreator_V3 : EditorWindow
         AssetDatabase.SaveAssets();
     }
 
-    private int GetID(int C, int R, bool PRIMARY)
+    private int GetID(int C, int R, bool PRIMARY, bool isSpecialBuidling)
     {
         bool specialCase = mapscript.getpartname(C, R) == "4_fourway" || mapscript.getpartname(C, R) == "3_fourway" || mapscript.getpartname(C, R) == "2_fourway" || mapscript.getpartname(C, R) == "1_fourway" || mapscript.getpartname(C, R) == "1_bridge1" || mapscript.getpartname(C, R) == "2_bridge1" || mapscript.getpartname(C, R) == "3_bridge1" || mapscript.getpartname(C, R) == "4_bridge1";
         if (specialCase)
@@ -1257,10 +1264,15 @@ public class AutoRoadCreator_V3 : EditorWindow
             {
                 return 0;
             }
-        }
+        }   
         if (!GridBoxes[C][R].IsOn)
         {
             return 0;
+        }
+        // Special building (in work)
+        if (mapscript.getpartname(C, R) == "SpecialBuildingPlace")
+        {
+            return 501;
         }
 
 
@@ -1302,11 +1314,11 @@ public class AutoRoadCreator_V3 : EditorWindow
             }
         }
         catch (ArgumentOutOfRangeException e) { }
-        return GetTextureID(tempRight, tempUp, tempLeft, tempDown);
+        return GetTextureID(tempRight, tempUp, tempLeft, tempDown, isSpecialBuidling);
     }
-    private int GetTextureID(bool Right, bool Up, bool Left, bool Down)
+    private int GetTextureID(bool Right, bool Up, bool Left, bool Down, bool isSpecialBuidling)
     {
-        Debug.Log("GetTextureID");
+        // change for building (this place) to get right one
         if (Lanes != 4)
         {
             if (Right && Up && Left && Down)
@@ -1376,6 +1388,73 @@ public class AutoRoadCreator_V3 : EditorWindow
         }
         else
         {
+            if (isSpecialBuidling)
+            {
+                if (Right && Up && Left && Down)
+                {
+                    return (3 * 100 + 11);
+                }
+                if (!Right && Up && Left && Down)
+                {
+                    return (3 * 100 + 8);
+                }
+                if (Right && !Up && Left && Down)
+                {
+                    return (3 * 100 + 9);
+                }
+                if (Right && Up && !Left && Down)
+                {
+                    return (3 * 100 + 10);
+                }
+                if (Right && Up && Left && !Down)
+                {
+                    return (3 * 100 + 7);
+                }
+                if (!Right && !Up && Left && Down)
+                {
+                    return (3 * 100 + 5);
+                }
+                if (!Right && Up && !Left && Down)
+                {
+                    return (3 * 100 + 2);
+                }
+                if (!Right && Up && Left && !Down)
+                {
+                    return (3 * 100 + 4);
+                }
+                if (Right && !Up && !Left && Down)
+                {
+                    return (3 * 100 + 6);
+                }
+                if (Right && !Up && Left && !Down)
+                {
+                    return (3 * 100 + 1);
+                }
+                if (Right && Up && !Left && !Down)
+                {
+                    return (3 * 100 + 3);
+                }
+                if (!Right && !Up && !Left && Down)
+                {
+                    return (3 * 100 + 2);
+                }
+                if (!Right && !Up && Left && !Down)
+                {
+                    return (3 * 100 + 1);
+                }
+                if (!Right && Up && !Left && !Down)
+                {
+                    return (3 * 100 + 2);
+                }
+                if (Right && !Up && !Left && !Down)
+                {
+                    return (3 * 100 + 1);
+                }
+                if (!Right && !Up && !Left && !Down)
+                {
+                    return (3 * 100 + 2);
+                }
+            }
             return ((Lanes + 1) * 100 + 1);
         }
         return 0;

@@ -82,6 +82,10 @@ public class MapScriptV3 : MonoBehaviour
         Parts[i][j].name = partsnames[i][j];
         Parts[i][j].transform.parent = transform;
         Parts[i][j].transform.localPosition = new Vector3(50 * i, 0, -50 * j);
+        if (partsnames[i][j] == "SpecialBuildingPlace")
+        {
+            Parts[i][j].transform.localScale = new Vector3(50, 50, 50);
+        }
     }
 
     public void ResetTheMap(int CC, int RR)
@@ -100,7 +104,7 @@ public class MapScriptV3 : MonoBehaviour
                     setpart(x, y, transform.GetChild(i).gameObject);
                     partsExist[x][y] = true;
                     Setpartname(x, y, transform.GetChild(i).GetComponent<PartScriptV3>().GetName());
-                    Parts[x][y].GetComponent<MeshCollider>().sharedMesh = Parts[x][y].GetComponent<MeshFilter>().sharedMesh;
+                    // Parts[x][y].GetComponent<MeshCollider>().sharedMesh = Parts[x][y].GetComponent<MeshFilter>().sharedMesh;
                     if (ter == null)
                     {
                         Parts[x][y].transform.localPosition = new Vector3(Parts[x][y].transform.localPosition.x, 0, Parts[x][y].transform.localPosition.z);

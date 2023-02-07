@@ -30,7 +30,6 @@ public class GridBox : ScriptableObject
 
     public void Drag(Vector2 Delta)
     {
-        Debug.Log(Delta);
         rect.position += Delta;
     }
     public void Draw()

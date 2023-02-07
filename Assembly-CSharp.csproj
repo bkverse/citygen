@@ -62,11 +62,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Auto-road Creator_V3\Resources\MapsFiles\mapdataMap#-16242.xml" />
+    <None Include="Assets\Auto-road Creator_V3\Resources\MapsFiles\mapdataMap#-1698.xml" />
+    <None Include="Assets\Auto-road Creator_V3\Resources\MapsFiles\GridBoxesMap#-1698.xml" />
     <None Include="Assets\Auto-road Creator_V3\Resources\MapsFiles\mapdataMap#-64890.xml" />
     <None Include="Assets\Auto-road Creator_V3\Resources\MapsFiles\GridBoxesMap#-16242.xml" />
     <None Include="Assets\Auto-road Creator_V3\Resources\MapsFiles\GridBoxesMap#-64890.xml" />
+    <None Include="Assets\Auto-road Creator_V3\Resources\MapsFiles\GridBoxesMap#-1592.xml" />
     <None Include="Assets\Auto-road Creator_V3\Resources\MapsFiles\mapdataMap#-34908.xml" />
     <None Include="Assets\Auto-road Creator_V3\Resources\MapsFiles\GridBoxesMap#-34908.xml" />
+    <None Include="Assets\Auto-road Creator_V3\Resources\MapsFiles\mapdataMap#-1592.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

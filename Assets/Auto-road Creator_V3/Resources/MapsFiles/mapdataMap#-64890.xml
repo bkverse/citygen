@@ -2,7 +2,7 @@
 <MapData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <name />
   <hideFlags>None</hideFlags>
-  <columns>10</columns>
-  <rows>10</rows>
+  <columns>17</columns>
+  <rows>15</rows>
   <LastLaneUsed>4</LastLaneUsed>
 </MapData>
