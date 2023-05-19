@@ -1,0 +1,11 @@
+Model Information:
+* title:	Russian Panel House
+* source:	https://sketchfab.com/3d-models/russian-panel-house-5f98095c4e5e41e490aed66a4166c1f1
+* author:	C01L3D (https://sketchfab.com/c01l3d)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Russian Panel House" (https://sketchfab.com/3d-models/russian-panel-house-5f98095c4e5e41e490aed66a4166c1f1) by C01L3D (https://sketchfab.com/c01l3d) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

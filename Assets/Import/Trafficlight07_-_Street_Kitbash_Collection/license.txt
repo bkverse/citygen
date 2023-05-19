@@ -1,0 +1,11 @@
+Model Information:
+* title:	Trafficlight07 - Street Kitbash Collection
+* source:	https://sketchfab.com/3d-models/trafficlight07-street-kitbash-collection-41b54ad4d0ac410c91fbecd18ce199aa
+* author:	experiment_studio (https://sketchfab.com/experiment_studio)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Trafficlight07 - Street Kitbash Collection" (https://sketchfab.com/3d-models/trafficlight07-street-kitbash-collection-41b54ad4d0ac410c91fbecd18ce199aa) by experiment_studio (https://sketchfab.com/experiment_studio) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

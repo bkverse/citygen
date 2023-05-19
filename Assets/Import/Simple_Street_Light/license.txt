@@ -1,0 +1,11 @@
+Model Information:
+* title:	Simple Street Light
+* source:	https://sketchfab.com/3d-models/simple-street-light-127d854caca141bca50eb14f035d617b
+* author:	碧 (https://sketchfab.com/LK_7)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Simple Street Light" (https://sketchfab.com/3d-models/simple-street-light-127d854caca141bca50eb14f035d617b) by 碧 (https://sketchfab.com/LK_7) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

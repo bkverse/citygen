@@ -1,0 +1,11 @@
+Model Information:
+* title:	Russian-Soviet panel house: Panelka
+* source:	https://sketchfab.com/3d-models/russian-soviet-panel-house-panelka-4a10917f543749769de54d131386b85f
+* author:	TadenStar (https://sketchfab.com/tadenstar)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Russian-Soviet panel house: Panelka" (https://sketchfab.com/3d-models/russian-soviet-panel-house-panelka-4a10917f543749769de54d131386b85f) by TadenStar (https://sketchfab.com/tadenstar) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

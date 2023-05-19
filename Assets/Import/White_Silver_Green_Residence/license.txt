@@ -1,0 +1,11 @@
+Model Information:
+* title:	White Silver Green Residence
+* source:	https://sketchfab.com/3d-models/white-silver-green-residence-ec516ba32f03403f97954472c5d4b2cf
+* author:	Francesco Coldesina (https://sketchfab.com/topfrank2013)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "White Silver Green Residence" (https://sketchfab.com/3d-models/white-silver-green-residence-ec516ba32f03403f97954472c5d4b2cf) by Francesco Coldesina (https://sketchfab.com/topfrank2013) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
