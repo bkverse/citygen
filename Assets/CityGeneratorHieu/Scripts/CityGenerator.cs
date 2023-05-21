@@ -27,7 +27,7 @@ public class CityGenerator : MonoBehaviour
         setMap();
         GenerateRoad();
         GenerateAssetRoad();
-        // GenerateHouse();
+        GenerateHouse();
         
     }
 
@@ -136,7 +136,7 @@ public class CityGenerator : MonoBehaviour
             GameObject visualizerObject = GameObject.Find("Visualizer2");
             visualizerScript = visualizerObject.GetComponent<Visualizer>();
             var direction  = new Vector3(-50,0,0);
-            visualizerScript.CreateRoad2(new Vector3(2500,0,2500), direction, MapSize);
+            visualizerScript.CreateRoad2(new Vector3(Mathf.FloorToInt(MapSize/2)*50,0,Mathf.FloorToInt(MapSize/2)*50), direction, MapSize);
             visualizerScript.fixRoad();
         }
     }

@@ -80,11 +80,10 @@ public class MapScriptV3 : MonoBehaviour
         Parts[i][j] = Instantiate(Resources.Load(partsnames[i][j])) as GameObject;
         Parts[i][j].AddComponent<PartScriptV3>().Set("" + partsnames[i][j], i, j);
         Parts[i][j].name = partsnames[i][j];
-        Debug.Log(Parts[i][j].name);
-        if (Parts[i][j].name.Contains('straight'))
-        {
-            Parts[i][j].tag = "straightRoad"
-        }
+        // if (Parts[i][j].name.Contains('straight'))
+        // {
+        //     Parts[i][j].tag = "straightRoad";
+        // }
         Parts[i][j].transform.parent = transform;
         Parts[i][j].transform.localPosition = new Vector3(50 * i, 0, -50 * j);
         if (partsnames[i][j] == "SpecialBuildingPlace")

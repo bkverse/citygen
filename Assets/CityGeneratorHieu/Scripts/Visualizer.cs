@@ -170,6 +170,8 @@ using Random=UnityEngine.Random;
 
         public void CreateRoad2(Vector3 position, Vector3 direction, int MapSize)
         {
+            MaxLength = MapSize;
+            MinLength = MapSize/10;
             int roadLength = MaxLength;
             roadHelper.PlaceStreetPositions(position, direction, roadLength);
             int keepGenerating = 0;
@@ -178,7 +180,7 @@ using Random=UnityEngine.Random;
             while ( keepGenerating != 1 && roadCount < MaxRoad) {
                 roadLength = Random.Range(MinLength, MaxLength);
                 GameObject[] GenPoint = GameObject.FindGameObjectsWithTag("GenRoad");
-                var element = GenPoint[Random. Range(0, GenPoint.Length)];
+                var element = GenPoint[Random.Range(0, GenPoint.Length-1)];
                 roadHelper.CreateBranchRoad(element, roadLength);
                 keepGenerating = Random.Range(1, MapSize);
                 roadCount++;
@@ -192,7 +194,8 @@ using Random=UnityEngine.Random;
 
         public void AddHouse(int MapSize)
         {
-            structureHelper.PlaceStructuresAroundRoad(roadHelper.GetRoadPositions());
+            structureHelper.PlaceStructuresAroundRoad(roadHelper.GetRoads());
+            // structureHelper.PlaceRandomStructuresInside(MapSize, roadHelper.GetRoadPositions());
         }
     }
 

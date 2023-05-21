@@ -8,7 +8,8 @@ public class BuildingDataType
 {
     [SerializeField]
     private GameObject[] prefabs;
-    public int sizeRequired;
+    public int sizeRequiredX;
+    public int sizeRequiredY;
     public int quantity;
     private int quantityAlreadyPlaced;
 
