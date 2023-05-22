@@ -194,8 +194,8 @@ using Random=UnityEngine.Random;
 
         public void AddHouse(int MapSize)
         {
+            structureHelper.PlaceRandomStructuresInside(MapSize, roadHelper.GetRoadPositions());
             structureHelper.PlaceStructuresAroundRoad(roadHelper.GetRoads());
-            // structureHelper.PlaceRandomStructuresInside(MapSize, roadHelper.GetRoadPositions());
         }
     }
 

@@ -12,7 +12,7 @@ public class CityGenerator : MonoBehaviour
 
     public GameObject roadStraight, roadCorner, road3way, road4way, trafficLight, lightRoad, treeRoad;
     public List<BuildingDataType> buildingPrefabs = new List<BuildingDataType>();
-    public List<GameObject> naturePrefabs = new List<GameObject>();
+    public List<BuildingDataType> naturePrefabs = new List<BuildingDataType>();
 
     Visualizer visualizerScript;
     RoadHelper roadHelperScript;
@@ -84,7 +84,7 @@ public class CityGenerator : MonoBehaviour
         }
         if (naturePrefabs.Count >= 1)
         {
-            GameObject[] arrayOfNaturePrefabs = naturePrefabs.ToArray();
+            BuildingDataType[] arrayOfNaturePrefabs = naturePrefabs.ToArray();
             structureHelperScript.naturePrefabs = arrayOfNaturePrefabs;
         }
     }
@@ -136,7 +136,7 @@ public class CityGenerator : MonoBehaviour
             GameObject visualizerObject = GameObject.Find("Visualizer2");
             visualizerScript = visualizerObject.GetComponent<Visualizer>();
             var direction  = new Vector3(-50,0,0);
-            visualizerScript.CreateRoad2(new Vector3(Mathf.FloorToInt(MapSize/2)*50,0,Mathf.FloorToInt(MapSize/2)*50), direction, MapSize);
+            visualizerScript.CreateRoad2(new Vector3((Mathf.FloorToInt(MapSize/2)-1)*50,0,(Mathf.FloorToInt(MapSize/2)-1)*50), direction, MapSize);
             visualizerScript.fixRoad();
         }
     }

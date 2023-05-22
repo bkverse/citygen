@@ -72,9 +72,9 @@ using Random=UnityEngine.Random;
 
 		public void setBeginMap(int MapSize)
 		{
-			for(int x = 1 ; x <= MapSize; x++) {
-				for (int y = 1; y <= MapSize; y++) {
-					if (x == 1 || x == MapSize) {
+			for(int x = 0 ; x < MapSize; x++) {
+				for (int y = 0; y < MapSize; y++) {
+					if (x == 0 || x == MapSize-1) {
 						var position = new Vector3(x*50, 0, y*50);
 						var rotation = Quaternion.identity;
 						var direction = new Vector3(0,0,1);
@@ -83,7 +83,7 @@ using Random=UnityEngine.Random;
 						roadDictionary.Add(position, Tuple.Create(road, direction));
 						fixRoadCandidates.Add(position, direction);
 					}
-					else if (y == 1 || y == MapSize) {
+					else if (y == 0 || y == MapSize-1) {
 						var position = new Vector3(x*50, 0, y*50);
 						var rotation = Quaternion.Euler(0, 90, 0);
 						var direction = new Vector3(1,0,0);

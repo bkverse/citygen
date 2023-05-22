@@ -11,7 +11,7 @@ public class CityGeneratorEditor : Editor
     public int __GridX;
     public int __GridZ;
     private BuildingDataType building;
-    private GameObject nature;
+    private BuildingDataType nature;
     public void OnEnable()
     {
         __GridX = PlayerPrefs.GetInt("__GridX");

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Random=UnityEngine.Random;
-
 	public class StructureHelper : MonoBehaviour
 	{
 		public BuildingDataType[] buildingTypes;
-		public GameObject[] naturePrefabs;
+		public BuildingDataType[] naturePrefabs;
 		public bool randomNaturePlacement = false;
 		[Range(0, 1)]
 		public float randomNaturePlacementThreshold = 0.3f;
@@ -66,6 +65,10 @@ using Random=UnityEngine.Random;
 				{
 					continue;
 				}
+				if (structuresDictionary.ContainsKey(freeSpot.Key) || roadPositions.ContainsKey(freeSpot.Key))
+				{
+					continue;
+				}
 				var rotation = Quaternion.LookRotation(freeSpot.Value.Item2, Vector3.up);
 
 				switch (freeSpot.Value.Item1)
@@ -93,6 +96,7 @@ using Random=UnityEngine.Random;
 				List<Vector3> tempPositionsBlocked = new List<Vector3>();
 				if (VerifyIfBuildingFits(buildingTypes[buildingIndex].sizeRequiredX, buildingTypes[buildingIndex].sizeRequiredY, freeEstateSpots, freeSpot, blockedPositions, ref tempPositionsBlocked))
 				{
+					blockedPositions.Add(freeSpot.Key);
 					blockedPositions.AddRange(tempPositionsBlocked);
 					var halfSize = Mathf.FloorToInt(buildingTypes[buildingIndex].sizeRequiredX / 2.0f);
 					Vector3 direction = freeSpot.Value.Item2;
@@ -157,17 +161,17 @@ using Random=UnityEngine.Random;
 						var pos2 = freeSpot.Key - direction * i;
 						var keys = new List<Vector3>(freeEstateSpots.Keys);
 						if ( sizeRequiredX % 2 == 0 && i == halfSize ) {
-							if (findFreeEstateSpots(pos2, keys) && !findFreeEstateSpots(pos2, blockedPositions))
+							if (findFreeEstateSpots(pos2, keys) && !findFreeEstateSpots(pos2, blockedPositions) && !structuresDictionary.ContainsKey(pos2))
 							{
 								tempPositionsBlocked.Add(pos2);
 								return true;
-							} else if (findFreeEstateSpots(pos1, keys) && !findFreeEstateSpots(pos1, blockedPositions))
+							} else if (findFreeEstateSpots(pos1, keys) && !findFreeEstateSpots(pos1, blockedPositions) && !structuresDictionary.ContainsKey(pos1))
 							{
 								tempPositionsBlocked.Add(pos1);
 								return true;
 							} else return false;
 						}
-						if (!findFreeEstateSpots(pos1, keys) || !findFreeEstateSpots(pos2, keys) || findFreeEstateSpots(pos1, blockedPositions) || findFreeEstateSpots(pos2, blockedPositions))
+						if (!findFreeEstateSpots(pos1, keys) || !findFreeEstateSpots(pos2, keys) || findFreeEstateSpots(pos1, blockedPositions) || findFreeEstateSpots(pos2, blockedPositions) || !structuresDictionary.ContainsKey(pos1) || !structuresDictionary.ContainsKey(pos2))
 						{
 							return false;
 						}
@@ -183,29 +187,67 @@ using Random=UnityEngine.Random;
 		public void PlaceRandomStructuresInside(int MapSize, Dictionary<Vector3, Vector3> roadPositions)
 		{
 			// Get list of free spaces inside
-			int currentX = 2;
-			int currentY = 2;
-			while (currentY <= MapSize-1) {
-				spacesInsideClass space = GetSpacesInside(currentX, currentY, MapSize, roadPositions);
-				if (space.position == Vector3.zero) {
-					continue;
+			int currentX = 1;
+			int currentY = 1;
+			int count = 0;
+			int[,] visitedPlace = new int[MapSize,MapSize];
+			for (int x = 0; x < MapSize; x++)
+			{
+				visitedPlace[x,0] = 1;
+				visitedPlace[x,MapSize-1] = 1;
+				visitedPlace[0,x] = 1;
+				visitedPlace[MapSize-1,x] = 1;
+			}
+			while (!checkAllVisited(MapSize, visitedPlace)) {
+				if (count == 20) {
+					for (int i = 0; i < MapSize; i++)
+					{
+						for (int j = 0; j < MapSize; j++)
+						{
+							visitedPlace[i, j] = 1;
+						}
+					}
 				}
-				if (space.spaceX != 1)
-					currentX = currentX + space.spaceX - 1;
-				if (space.spaceY != 1)
-					currentY = currentY + space.spaceY - 1;
-				if (currentX == MapSize-1) {
-					currentX = 2;
-					currentY++;
+				var position = new Vector3(currentX*50, 0, currentY*50);
+				spacesInsideClass space = GetSpacesInside(currentX, currentY, MapSize, roadPositions, visitedPlace);
+				for (int x = currentX; x < (space.spaceX + currentX); x++) {
+					for (int y = currentY; y < (space.spaceY + currentY); y++) {
+						visitedPlace[x,y] = 1;
+					}
 				}
 				spacesInside.Add(space);
+				for (int y = 1; y < MapSize; y++)
+        {
+					bool breakLoops = false;
+					for (int x = 1; x < MapSize; x++)
+					{
+						if (visitedPlace[x, y] == 0)
+						{
+							position = new Vector3(x*50, 0, y*50);
+							if (roadPositions.ContainsKey(position) || structuresDictionary.ContainsKey(position)) {
+								visitedPlace[x, y] = 1;
+								continue;
+							}
+							currentX = x;
+							currentY = y;
+							count ++;
+							breakLoops = true;
+							break;
+						}
+					}
+					if (breakLoops)
+					{
+						break;
+					}
+        }
 			}
+
 			for(int i = 0; i < spacesInside.Count; i++) {
 				int spaceArea = spacesInside[i].spaceX * spacesInside[i].spaceY;
-				if (spaceArea > 30) {
+				if (spaceArea > 100) {
 					AddTerrain(spacesInside[i]);
 				}
-				else if (spaceArea < 10) {
+				else if (spaceArea < 25) {
 					continue;
 				}
 				else {
@@ -214,70 +256,84 @@ using Random=UnityEngine.Random;
 			}
 		}
 
-		public spacesInsideClass GetSpacesInside(int currentX, int currentY, int MapSize, Dictionary<Vector3, Vector3> roadPositions) {
-			int x = currentX;
-			int y = currentY;
+		public bool checkAllVisited (int MapSize, int [,] visitedPlace) {
+			for (int i = 0; i < MapSize; i++)
+			{
+				for (int j = 0; j < MapSize; j++)
+				{
+					if (visitedPlace[i, j] != 1)
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		public spacesInsideClass GetSpacesInside(int currentX, int currentY, int MapSize, Dictionary<Vector3, Vector3> roadPositions, int [,] visitedPlace) {
 			bool xBlocked = false;
 			bool yBlocked = false;
-			Vector3 currentPosition = new Vector3(currentX*50, 0, currentY*50);
-			while (x <= MapSize-1 || y <= MapSize-1) {
-				Vector3 position = new Vector3(x*50, 0, y*50);
-				if (roadPositions.ContainsKey(position) || structuresDictionary.ContainsKey(position)) {
-					if (x == currentX && y == currentY)
-						return new spacesInsideClass();
-					if (x > currentX && !xBlocked) {
-						x--;
-						xBlocked = true;
+			spacesInsideClass temp = new spacesInsideClass();
+			temp.position = new Vector3(currentX*50, 0, currentY*50);
+			var rotation = Quaternion.Euler(0, 0, 0);
+			for (int x = currentX; x < MapSize; x++) {
+				for (int y = currentY; y < MapSize; y++) {
+					if (xBlocked && yBlocked)
+					{
+						return temp;
 					}
-					if (y > currentY && !yBlocked) {
-						y--;
-						yBlocked = true;
+					Vector3 position = new Vector3(x*50, 0, y*50);
+					if (yBlocked && temp.spaceY == (y - currentY)) {
+						break;
+					}
+					if (roadPositions.ContainsKey(position) || structuresDictionary.ContainsKey(position) || visitedPlace[x,y] == 1) {
+						if ((x > currentX && !xBlocked) || x == MapSize-1) {
+							temp.spaceX = x - currentX;
+							xBlocked = true;
+							break;
+						}
+						if ((y > currentY && !yBlocked) || y == MapSize-1) {
+							temp.spaceY = y - currentY;
+							yBlocked = true;
+							break;
+						}
 					}
 				}
-				if (xBlocked && yBlocked) {
-					spacesInsideClass temp = new spacesInsideClass();
-					if (x == currentX) 
-						temp.spaceX = 1;
-					else 
-						temp.spaceX = x - currentX;
-					if (y == currentY) 
-						temp.spaceY = 1;
-					else 
-						temp.spaceY = y - currentY;
-					return temp;
-				} else if (xBlocked && !yBlocked) {
-					y++;
-				} else if (!xBlocked && yBlocked) {
-					x++;
-				} else {
-					if (x <= y)
-						x++; 
-					else 
-						y++;
-				}
+			}
+			if (xBlocked && yBlocked)
+			{
+				return temp;
 			}
 			return new spacesInsideClass();
 		}
 
 		private void AddTerrain(spacesInsideClass space) {
-			Debug.Log("Add terrain");
 			// TODO: add terrain
 		}
 
 		private void AddRandomPrefab(spacesInsideClass space) {
-			Debug.Log("Add random prefab");
 			int area = space.spaceX * space.spaceY;
 			int placedArea = 0;
-			while (placedArea < area/2)
-			{
-				int placeX = Random.Range(1, space.spaceX);
-				int placeY = Random.Range(1, space.spaceY);
-				Vector3 placePosition = new Vector3(placeX*50, 0, placeY*50) + space.position;
-				var rotation = Quaternion.Euler(0, 0, 0);
-				GameObject building = Instantiate(buildingTypes[0].GetPrefab(), placePosition, rotation, transform);
-				structuresDictionary.Add(placePosition, building);
-				placedArea = placedArea + buildingTypes[0].sizeRequiredX * buildingTypes[0].sizeRequiredY;
-				// TODO: check if have sth in place position
+			int count = 0;
+			List<Vector3> blockedPositions = new List<Vector3>();
+			if (space.spaceX >= 3 && space.spaceY >= 3) {
+				while (placedArea < area/2 && count < 10)
+				{
+					count++;
+					int natureIndex = Random.Range(0,naturePrefabs.Length);
+					int placeX = Random.Range(2, space.spaceX - 2);
+					int placeY = Random.Range(2, space.spaceY - 2);
+					Vector3 placePosition = new Vector3(placeX*50, 0, placeY*50) + space.position;
+					if (structuresDictionary.ContainsKey(placePosition))
+					{
+						continue;
+					}
+					var rotation = Quaternion.Euler(0, 0, 0);
+					GameObject building = Instantiate(naturePrefabs[natureIndex].GetPrefab(), placePosition, rotation, transform);
+					structuresDictionary.Add(placePosition, building);
+					placedArea = placedArea + naturePrefabs[natureIndex].sizeRequiredX * naturePrefabs[natureIndex].sizeRequiredY;
+					// TODO: check if have sth in place position
+				}
 			}
 		}
 
